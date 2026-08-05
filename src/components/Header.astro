@@ -1,0 +1,102 @@
+---
+import { Image } from 'astro:assets';
+import logoNegativo from '../assets/images/agora-logo-negativo.png';
+
+const navLinks = [
+  { href: '#logistica', label: 'Transporte' },
+  { href: '#consultoria', label: 'Consultoría' },
+  { href: '#casos', label: 'Casos' },
+  { href: '#nosotros', label: 'Nosotros' },
+  { href: '#contacto', label: 'Contacto' },
+];
+---
+
+<header id="site-header" style="position:sticky;top:0;z-index:60;background:#0C203E;border-bottom:1px solid rgba(189,151,80,0.28)">
+  <nav aria-label="Principal" style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="#inicio" aria-label="AGORA STRATEGY SAS, inicio" style="display:flex;align-items:center;flex:none;padding:4px 0">
+      <Image src={logoNegativo} alt="AGORA STRATEGY SAS" width={96} height={108} style="display:block;width:96px;height:auto" />
+    </a>
+
+    <div class="desktop-nav" style="display:flex;align-items:center;gap:clamp(16px,2.2vw,32px)">
+      {navLinks.map((link) => (
+        <a
+          href={link.href}
+          class="link-slide nav-link"
+          style="font-size:11.5px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:#E4E1D8;transition:color .2s ease"
+        >{link.label}</a>
+      ))}
+      <a href="#contacto" class="btn-fill-gold" style="font-size:11px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:#BD9750;border:1px solid #BD9750;padding:12px 22px">Cotizar carga</a>
+    </div>
+
+    <button
+      type="button"
+      id="burger-btn"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      class="burger-btn"
+      style="background:none;border:1px solid rgba(247,245,239,0.28);cursor:pointer;flex-direction:column;gap:5px;min-height:44px;min-width:44px;align-items:center;justify-content:center"
+    >
+      <span style="display:block;width:20px;height:1.5px;background:#F7F5EF"></span>
+      <span style="display:block;width:20px;height:1.5px;background:#BD9750"></span>
+      <span style="display:block;width:20px;height:1.5px;background:#F7F5EF"></span>
+    </button>
+  </nav>
+
+  <div id="mobile-menu" hidden class="mobile-menu-panel" style="border-top:1px solid rgba(189,151,80,0.25);padding:14px 24px 26px;flex-direction:column">
+    {navLinks.map((link) => (
+      <a href={link.href} class="mobile-menu-link" style="padding:15px 0;font-size:12.5px;letter-spacing:1.8px;text-transform:uppercase;color:#E4E1D8;border-bottom:1px solid rgba(247,245,239,0.08)">{link.label}</a>
+    ))}
+    <a href="#contacto" class="mobile-menu-link" style="margin-top:18px;text-align:center;font-size:12px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:#BD9750;border:1px solid #BD9750;padding:16px 22px">Cotizar carga</a>
+  </div>
+</header>
+
+<style>
+  .burger-btn {
+    display: none;
+  }
+  @media (max-width: 900px) {
+    .desktop-nav {
+      display: none !important;
+    }
+    .burger-btn {
+      display: flex;
+    }
+  }
+  .mobile-menu-panel:not([hidden]) {
+    display: flex;
+  }
+  #mobile-menu.open {
+    animation: agora-menu-in 0.3s ease both;
+  }
+</style>
+
+<script>
+  const burger = document.getElementById('burger-btn');
+  const menu = document.getElementById('mobile-menu');
+
+  function closeMenu() {
+    if (!menu || !burger) return;
+    menu.hidden = true;
+    menu.classList.remove('open');
+    burger.setAttribute('aria-expanded', 'false');
+  }
+
+  burger?.addEventListener('click', () => {
+    if (!menu) return;
+    const isOpen = !menu.hidden;
+    if (isOpen) {
+      closeMenu();
+    } else {
+      menu.hidden = false;
+      menu.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  menu?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+
+  window.matchMedia('(min-width: 901px)').addEventListener('change', (e) => {
+    if (e.matches) closeMenu();
+  });
+</script>

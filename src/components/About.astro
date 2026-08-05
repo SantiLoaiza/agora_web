@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+import simboloPositivo from '../assets/images/agora-simbolo-positivo.png';
+
+const objectives = [
+  {
+    num: '01',
+    title: 'Excelencia en cada operación',
+    text: 'Altos estándares de calidad, procesos internos optimizados y experiencias que el cliente puede verificar.',
+  },
+  {
+    num: '02',
+    title: 'Relaciones comerciales sostenibles',
+    text: 'Confianza con clientes, proveedores y aliados a partir de cumplimiento y comunicación clara.',
+  },
+  {
+    num: '03',
+    title: 'Crecimiento en el mercado colombiano',
+    text: 'Ampliar cobertura y reconocimiento con estrategias comerciales y operativas propias.',
+  },
+  {
+    num: '04',
+    title: 'Desarrollo del talento humano',
+    text: 'Formación permanente del equipo en un ambiente de responsabilidad y colaboración.',
+  },
+  {
+    num: '05',
+    title: 'Soluciones que generan valor',
+    text: 'Herramientas y conocimiento nuevo aplicados a logística, administración y gestión.',
+  },
+  {
+    num: '06',
+    title: 'Gestión responsable y sostenible',
+    text: 'Decisiones con principios éticos y transparencia, atentas al entorno donde operamos.',
+  },
+];
+---
+
+<section id="nosotros" data-screen-label="Nosotros" style="max-width:1200px;margin:0 auto;padding:clamp(72px,10vw,120px) 24px;scroll-margin-top:88px">
+  <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,72px);align-items:start;margin-bottom:clamp(48px,7vw,80px)">
+    <div>
+      <p style="margin:0 0 22px;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">Nuestra misión</p>
+      <h2 style="margin:0;font-family:Montserrat,sans-serif;font-weight:300;font-size:clamp(26px,3vw,40px);line-height:1.22;letter-spacing:-0.9px;color:#0C203E">Transporte seguro, eficiente y oportuno que impulse el desarrollo de nuestros clientes</h2>
+    </div>
+    <div>
+      <p style="margin:0;font-size:16px;font-weight:300;line-height:1.85;color:#4A5262;max-width:50ch">Ofrecemos transporte de carga por carretera y asesoría empresarial con excelencia operativa, innovación y mejora continua. Cada despacho y cada recomendación se sostienen en el mismo compromiso: cumplir lo pactado y dejar la operación del cliente mejor de lo que la encontramos.</p>
+      <Image class="arrow-drift" src={simboloPositivo} alt="" width={64} height={46} style="display:block;width:64px;height:auto;margin-top:32px" />
+    </div>
+  </div>
+
+  <div class="reveal" style="display:flex;align-items:baseline;gap:16px;margin-bottom:32px">
+    <span class="rule-grow" style="width:34px;height:1px;background:#BD9750;display:block"></span>
+    <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">Objetivos corporativos</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(16px,2vw,20px)">
+    {objectives.map((obj) => (
+      <article class="reveal obj" style="border:1px solid rgba(12,32,62,0.12);padding:28px 26px 30px;display:flex;flex-direction:column;gap:12px">
+        <span style="font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1;color:#BD9750">{obj.num}</span>
+        <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:17px;line-height:1.35;color:#0C203E">{obj.title}</h3>
+        <p style="margin:0;font-size:14px;font-weight:300;line-height:1.7;color:#4A5262">{obj.text}</p>
+      </article>
+    ))}
+  </div>
+</section>

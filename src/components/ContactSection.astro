@@ -1,0 +1,33 @@
+---
+import { getImage } from 'astro:assets';
+import simboloPositivo from '../assets/images/agora-simbolo-positivo.png';
+import ContactForm from './ContactForm';
+
+const simbolo = await getImage({ src: simboloPositivo, width: 144 });
+---
+
+<section id="contacto" data-screen-label="Contacto" style="background:#EFEBE0;border-top:1px solid rgba(12,32,62,0.08);scroll-margin-top:88px">
+  <div style="max-width:1200px;margin:0 auto;padding:clamp(72px,10vw,120px) 24px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(36px,5vw,72px);align-items:start">
+      <div class="reveal">
+        <p style="margin:0 0 22px;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">Hablemos</p>
+        <h2 style="margin:0;font-family:Montserrat,sans-serif;font-weight:300;font-size:clamp(28px,3.3vw,45px);line-height:1.16;letter-spacing:-1px;color:#0C203E;max-width:14ch">Cuéntenos qué necesita mover</h2>
+        <p style="margin:24px 0 0;font-size:16px;font-weight:300;line-height:1.8;color:#4A5262;max-width:40ch">Las solicitudes de carga se responden en cuatro horas hábiles con franja tarifaria preliminar. Las de asesoría, en máximo 48 horas.</p>
+        <div style="margin-top:44px;display:flex;flex-direction:column;gap:20px;border-top:1px solid rgba(12,32,62,0.14);padding-top:28px">
+          <div>
+            <p style="margin:0;font-size:10px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#6E7686">Teléfono</p>
+            <p style="margin:6px 0 0;font-size:16px;font-weight:400;color:#0C203E">+57 316 317 4316</p>
+          </div>
+          <div>
+            <p style="margin:0;font-size:10px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#6E7686">Oficina</p>
+            <p style="margin:6px 0 0;font-size:16px;font-weight:400;color:#0C203E">Bogotá · Colombia</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal" style="background:#FFFDF8;border:1px solid rgba(12,32,62,0.12);padding:clamp(26px,3.4vw,46px)">
+        <ContactForm client:load simboloSrc={simbolo.src} />
+      </div>
+    </div>
+  </div>
+</section>
