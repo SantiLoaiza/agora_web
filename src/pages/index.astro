@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Maintenance from '../components/Maintenance.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Services from '../components/Services.astro';
@@ -10,20 +11,37 @@ import Backing from '../components/Backing.astro';
 import About from '../components/About.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Footer from '../components/Footer.astro';
+
+// Fails safe: the real landing only ships when someone explicitly opts out of
+// maintenance, so a missing or misspelled variable keeps the site under wraps
+// rather than publishing it by accident.
+const maintenance = import.meta.env.PUBLIC_MAINTENANCE !== 'false';
 ---
 
-<Layout
-  title="AGORA STRATEGY SAS · Movemos su carga. También diseñamos la operación."
-  description="AGORA STRATEGY SAS — Transporte de carga por carretera y asesoría empresarial. Operación segura, eficiente y oportuna desde Bogotá."
->
-  <Header />
-  <Hero />
-  <Services />
-  <Consultoria />
-  <Process />
-  <Cases />
-  <Backing />
-  <About />
-  <ContactSection />
-  <Footer />
-</Layout>
+{
+  maintenance ? (
+    <Layout
+      title="AGORA STRATEGY SAS · Sitio en construcción"
+      description="Estamos afinando los últimos detalles de nuestro sitio. Mientras tanto, atendemos su solicitud en el +57 316 317 4316 y en contacto@agorastrategy.co."
+      noindex
+    >
+      <Maintenance />
+    </Layout>
+  ) : (
+    <Layout
+      title="AGORA STRATEGY SAS · Movemos su carga. También diseñamos la operación."
+      description="AGORA STRATEGY SAS — Transporte de carga por carretera y asesoría empresarial. Operación segura, eficiente y oportuna desde Bogotá."
+    >
+      <Header />
+      <Hero />
+      <Services />
+      <Consultoria />
+      <Process />
+      <Cases />
+      <Backing />
+      <About />
+      <ContactSection />
+      <Footer />
+    </Layout>
+  )
+}
