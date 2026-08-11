@@ -1,0 +1,62 @@
+---
+const offices = [
+  { city: 'Bogotá', tag: 'Sede principal', text: 'Centro de operaciones nacional y principal hub logístico.' },
+  { city: 'Cali', tag: 'Sede regional', text: 'Punto estratégico para las operaciones del suroccidente colombiano.' },
+  { city: 'Medellín', tag: 'Sede regional', text: 'Conexión directa con el noroccidente y el eje cafetero.' },
+  { city: 'Resto del país', tag: '+1.100 municipios', text: 'Veredas y corregimientos incluidos, con seguimiento en todo el trayecto.' },
+];
+
+const zones = [
+  {
+    range: '1 – 2',
+    places: 'Cali · Medellín · Bucaramanga · Barrancabermeja · Armenia · Pereira · Neiva · Tunja · Duitama · Sogamoso · Fusagasugá · Girardot · Espinal · Guaduas · Melgar · Villavicencio · La Dorada · Acacías · Puerto Boyacá',
+  },
+  {
+    range: '2 – 3',
+    places: 'Chiquinquirá · Barbosa · Puerto López · Cumaral · Puerto Salgar · Garzón · Guamal · Saldaña · Granada · Puerto Lleras · Puerto Berrío',
+  },
+  {
+    range: '2 – 4',
+    places: 'Barranquilla · Cartagena · Santa Marta · Valledupar · Montería · Sincelejo · Pasto · Ipiales · Cúcuta · Ocaña · Popayán · Florencia · Pitalito · Caucasia · Aguachica · Mocoa · Tame',
+  },
+  {
+    range: '3 – 5',
+    places: 'Tumaco · Puerto Asís · Orito · Riohacha · Maicao · Quibdó · Istmina · Tibú · Apartadó · San Vicente del Caguán · Rubiales',
+  },
+];
+---
+
+<section id="cobertura" data-screen-label="Cobertura" style="background:#0C203E;scroll-margin-top:88px">
+  <div style="max-width:1200px;margin:0 auto;padding:clamp(72px,10vw,116px) 24px">
+    <div class="reveal" style="display:flex;align-items:baseline;gap:16px;margin-bottom:14px">
+      <span class="rule-grow" style="width:34px;height:1px;background:#BD9750;display:block"></span>
+      <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#BD9750">Cobertura nacional</p>
+    </div>
+    <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(28px,4vw,64px);align-items:end;margin-bottom:clamp(40px,5vw,60px)">
+      <h2 style="margin:0;font-family:Montserrat,sans-serif;font-weight:300;font-size:clamp(28px,3.4vw,46px);line-height:1.16;letter-spacing:-1px;color:#F7F5EF;max-width:16ch">Estamos donde nos necesita</h2>
+      <p style="margin:0;font-size:16px;font-weight:300;line-height:1.8;color:#B7BDC8;max-width:44ch">Llegamos a veredas, municipios y corregimientos de los 32 departamentos, con sedes propias en las tres ciudades principales.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(16px,2vw,20px);margin-bottom:clamp(40px,5vw,60px)">
+      {offices.map((o) => (
+        <div class="reveal cred" style="border-top:1px solid rgba(189,151,80,0.35);padding:20px 0 0">
+          <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:18px;letter-spacing:-0.2px;color:#F7F5EF">{o.city}</h3>
+          <p style="margin:8px 0 0;font-size:13px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#BD9750">{o.tag}</p>
+          <p style="margin:10px 0 0;font-size:14px;font-weight:300;line-height:1.7;color:#B7BDC8">{o.text}</p>
+        </div>
+      ))}
+    </div>
+
+    <p class="reveal" style="margin:0 0 22px;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#BD9750">Tiempos de entrega en días hábiles</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(14px,1.8vw,18px)">
+      {zones.map((z) => (
+        <div class="reveal zone" style="border:1px solid rgba(247,245,239,0.16);padding:24px 22px 26px">
+          <p style="margin:0;font-family:'Cormorant Garamond',serif;font-size:40px;line-height:1;color:#BD9750">{z.range}</p>
+          <p style="margin:10px 0 16px;font-size:10.5px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;color:#8A94A6">Días hábiles</p>
+          <p style="margin:0;font-size:13.5px;font-weight:300;line-height:1.75;color:#C4C9D2">{z.places}</p>
+        </div>
+      ))}
+    </div>
+    <p class="reveal" style="margin:22px 0 0;font-size:12.5px;font-weight:300;line-height:1.7;color:#8A94A6;max-width:70ch">Los tiempos se cuentan en días hábiles y están sujetos a condiciones climáticas, cierres viales y horarios de recepción. Para mercancía especial, refrigerada o sobredimensionada, el tiempo puede variar.</p>
+  </div>
+</section>

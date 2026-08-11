@@ -1,0 +1,24 @@
+---
+const items = [
+  { title: 'Trazabilidad 24/7', text: 'Monitoreo satelital constante de ubicación y estado de la carga.' },
+  { title: 'Alertas automáticas', text: 'Notificaciones en cada etapa, sin que usted tenga que preguntar.' },
+  { title: 'Informes y reportes', text: 'Información detallada de sus envíos para la toma de decisiones.' },
+];
+---
+
+<section data-screen-label="Tecnología" style="background:#EFEBE0;border-top:1px solid rgba(12,32,62,0.08);border-bottom:1px solid rgba(12,32,62,0.08)">
+  <div style="max-width:1200px;margin:0 auto;padding:clamp(64px,8vw,100px) 24px">
+    <div class="reveal" style="display:flex;align-items:baseline;gap:16px;margin-bottom:40px">
+      <span class="rule-grow" style="width:34px;height:1px;background:#BD9750;display:block"></span>
+      <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">Tecnología que nos conecta</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:clamp(20px,3vw,36px)">
+      {items.map((item) => (
+        <div class="reveal" style="border-top:1px solid rgba(12,32,62,0.18);padding-top:22px">
+          <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:18px;color:#0C203E">{item.title}</h3>
+          <p style="margin:10px 0 0;font-size:14px;font-weight:300;line-height:1.7;color:#4A5262">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

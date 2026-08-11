@@ -1,47 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Maintenance from '../components/Maintenance.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Services from '../components/Services.astro';
-import Consultoria from '../components/Consultoria.astro';
+import Fleet from '../components/Fleet.astro';
+import Coverage from '../components/Coverage.astro';
 import Process from '../components/Process.astro';
-import Cases from '../components/Cases.astro';
-import Backing from '../components/Backing.astro';
+import Technology from '../components/Technology.astro';
+import Industries from '../components/Industries.astro';
 import About from '../components/About.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Footer from '../components/Footer.astro';
-
-// Fails safe: the real landing only ships when someone explicitly opts out of
-// maintenance, so a missing or misspelled variable keeps the site under wraps
-// rather than publishing it by accident.
-const maintenance = import.meta.env.PUBLIC_MAINTENANCE !== 'false';
 ---
 
-{
-  maintenance ? (
-    <Layout
-      title="AGORA STRATEGY SAS · Sitio en construcción"
-      description="Estamos afinando los últimos detalles de nuestro sitio. Muy pronto encontrará aquí nuestros servicios de transporte de carga y asesoría empresarial."
-      noindex
-    >
-      <Maintenance />
-    </Layout>
-  ) : (
-    <Layout
-      title="AGORA STRATEGY SAS · Movemos su carga. También diseñamos la operación."
-      description="AGORA STRATEGY SAS — Transporte de carga por carretera y asesoría empresarial. Operación segura, eficiente y oportuna desde Bogotá."
-    >
-      <Header />
-      <Hero />
-      <Services />
-      <Consultoria />
-      <Process />
-      <Cases />
-      <Backing />
-      <About />
-      <ContactSection />
-      <Footer />
-    </Layout>
-  )
-}
+<Layout
+  title="AGORA STRATEGY SAS · Moviendo al mundo con inteligencia"
+  description="AGORA STRATEGY SAS — Transporte de carga masiva, semimasiva y distribución con cobertura en los 32 departamentos de Colombia. Moviendo al mundo con inteligencia."
+>
+  <Header />
+  <Hero />
+  <Services />
+  <Fleet />
+  <Coverage />
+  <Process />
+  <Technology />
+  <Industries />
+  <About />
+  <ContactSection />
+  <Footer />
+</Layout>

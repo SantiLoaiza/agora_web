@@ -35,6 +35,7 @@ function initCountUp() {
         if (reduced) return;
         const to = parseFloat(el.getAttribute('data-to') || '0') || 0;
         const pad = parseInt(el.getAttribute('data-pad') || '0', 10);
+        const prefix = el.getAttribute('data-prefix') || '';
         const suffix = el.getAttribute('data-suffix') || '';
         const t0 = performance.now();
         const dur = 1100;
@@ -42,7 +43,7 @@ function initCountUp() {
           const p = Math.min(1, (t - t0) / dur);
           let v = String(Math.round(to * (1 - Math.pow(1 - p, 3))));
           if (pad) v = v.padStart(pad, '0');
-          el.textContent = v + suffix;
+          el.textContent = prefix + v + suffix;
           if (p < 1) requestAnimationFrame(tick);
         };
         requestAnimationFrame(tick);
@@ -89,7 +90,6 @@ function initShipmentTracking() {
     if (marker) marker.style.top = `${(p * 100).toFixed(1)}%`;
     set('hp-pct', `${Math.round(p * 100)}%`);
     set('hp-km', `${Math.max(4, Math.round(TOTAL * (1 - p)))} km`);
-    set('hp-temp', `${(3.8 + Math.random() * 0.5).toFixed(1).replace('.', ',')} °C`);
     let place = PLACES[0][1];
     PLACES.forEach(([threshold, label]) => {
       if (p >= threshold) place = label;

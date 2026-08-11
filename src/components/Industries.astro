@@ -1,0 +1,28 @@
+---
+const sectors = [
+  { title: 'Industrial', text: 'Insumos, materias primas y producto terminado.' },
+  { title: 'Comercio y retail', text: 'Distribución para canal mayorista y punto de venta.' },
+  { title: 'Consumo masivo', text: 'Abastecimiento y distribución de alta rotación.' },
+  { title: 'Agroindustrial', text: 'Productos agrícolas y alimenticios.' },
+  { title: 'Farmacéutico', text: 'Transporte con estándares de temperatura y seguridad.' },
+  { title: 'Construcción', text: 'Materiales, equipos y maquinaria de obra.' },
+  { title: 'Tecnología', text: 'Equipos, dispositivos y componentes de alto valor.' },
+  { title: 'Automotriz', text: 'Cadena automotriz y autopartes.' },
+  { title: 'Energía', text: 'Equipos e insumos para el sector energético.' },
+];
+---
+
+<section data-screen-label="Sectores" style="max-width:1200px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px">
+  <div class="reveal" style="display:flex;align-items:baseline;gap:16px;margin-bottom:34px">
+    <span class="rule-grow" style="width:34px;height:1px;background:#BD9750;display:block"></span>
+    <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">Sectores que atendemos</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(12px,1.6vw,16px)">
+    {sectors.map((sector) => (
+      <div class="reveal obj" style="border:1px solid rgba(12,32,62,0.12);padding:22px 20px;display:flex;flex-direction:column;gap:8px">
+        <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:16px;color:#0C203E">{sector.title}</h3>
+        <p style="margin:0;font-size:13.5px;font-weight:300;line-height:1.65;color:#4A5262">{sector.text}</p>
+      </div>
+    ))}
+  </div>
+</section>

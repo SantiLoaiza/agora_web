@@ -56,11 +56,11 @@ input, select, textarea, button {
 .step-row .step-num { transition: color .3s ease, transform .3s ease; }
 .step-row:hover .step-num { color: #0C203E; transform: translateX(4px); }
 
-.metric { transition: transform .35s cubic-bezier(.2,.7,.3,1); }
-.lift:hover .metric { transform: translateY(-2px); }
-
 .cred { transition: border-color .3s ease, transform .3s ease; }
 .cred:hover { border-color: #BD9750; transform: translateY(-4px); }
+
+.zone { transition: background-color .3s ease, border-color .3s ease; }
+.zone:hover { background: rgba(189,151,80,0.06); }
 
 .link-slide { position: relative; }
 .link-slide::after {
@@ -76,13 +76,11 @@ input, select, textarea, button {
   transition: transform .3s cubic-bezier(.2,.7,.3,1);
 }
 .link-slide:hover::after { transform: scaleX(1); }
-.nav-link:hover { color: #BD9750; }
-.link-navy:hover { color: #0C203E; }
+.nav-link:hover { color: #BD9750 !important; }
+.link-navy:hover { color: #0C203E !important; }
 
 .btn-fill-gold { transition: background-color .25s ease, color .25s ease; }
-.btn-fill-gold:hover { background: #BD9750; color: #0C203E; }
-.btn-fill-navy { transition: background-color .25s ease, color .25s ease; }
-.btn-fill-navy:hover { background: #0C203E; color: #F7F5EF; }
+.btn-fill-gold:hover { background: #BD9750 !important; color: #0C203E !important; }
 
 .btn-sweep { position: relative; overflow: hidden; isolation: isolate; }
 .btn-sweep::before {
@@ -95,7 +93,7 @@ input, select, textarea, button {
   z-index: -1;
 }
 .btn-sweep:hover::before { transform: translateY(0); }
-.btn-sweep:hover { border-color: #BD9750; color: #0C203E; }
+.btn-sweep:hover { border-color: #BD9750 !important; color: #0C203E !important; }
 
 .arrow-drift { animation: agora-arrow-drift 4.5s ease-in-out infinite; }
 @keyframes agora-arrow-drift {

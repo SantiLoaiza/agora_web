@@ -1,0 +1,32 @@
+---
+const vehicles = [
+  { name: 'Carry', capacity: '1.000 kg', volume: '4,5 m³', text: 'Paquetería y entregas rápidas en ciudad.' },
+  { name: 'NHR', capacity: '2.700 kg', volume: '14 m³', text: 'Distribución urbana y regional.' },
+  { name: 'Turbo', capacity: '5.000 kg', volume: '22 m³', text: 'Carga mediana y entregas regionales.' },
+  { name: 'Sencillo', capacity: '7.000 kg', volume: '30 m³', text: 'Carga voluminosa y distribución regional.' },
+  { name: 'Camabaja', capacity: '20.000 kg', volume: 'Sobredimensionada', text: 'Maquinaria, equipos y carga extradimensionada.' },
+  { name: 'Tractomula', capacity: '28.000 kg', volume: '53 m³', text: 'Gran volumen y largas distancias.' },
+];
+---
+
+<section id="flota" data-screen-label="Flota" style="max-width:1200px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;scroll-margin-top:96px">
+  <div class="reveal" style="display:flex;align-items:baseline;gap:16px;margin-bottom:14px">
+    <span class="rule-grow" style="width:34px;height:1px;background:#BD9750;display:block"></span>
+    <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">Nuestra flota</p>
+  </div>
+  <div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(32px,4vw,48px)">
+    <h2 style="margin:0;font-family:Montserrat,sans-serif;font-weight:300;font-size:clamp(28px,3.4vw,46px);line-height:1.16;letter-spacing:-1px;color:#0C203E;max-width:18ch">El vehículo indicado para cada tipo de carga</h2>
+    <p style="margin:0;font-size:16px;font-weight:300;line-height:1.8;color:#4A5262;max-width:44ch">Unidades verificadas mecánica y documentalmente, con mantenimiento preventivo programado y conductores certificados.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:clamp(14px,1.8vw,18px)">
+    {vehicles.map((v) => (
+      <article class="reveal obj" style="border:1px solid rgba(12,32,62,0.12);padding:26px 24px 28px;display:flex;flex-direction:column;gap:10px">
+        <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:16px;letter-spacing:1.4px;text-transform:uppercase;color:#0C203E">{v.name}</h3>
+        <p style="margin:0;font-family:'Cormorant Garamond',serif;font-size:34px;line-height:1;color:#0C203E">{v.capacity}</p>
+        <p style="margin:0;font-size:12.5px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:#8A7238">{v.volume}</p>
+        <p style="margin:8px 0 0;font-size:13.5px;font-weight:300;line-height:1.65;color:#4A5262">{v.text}</p>
+      </article>
+    ))}
+  </div>
+</section>

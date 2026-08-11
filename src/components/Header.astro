@@ -3,11 +3,11 @@ import { Image } from 'astro:assets';
 import logoNegativo from '../assets/images/agora-logo-negativo.png';
 
 const navLinks = [
-  { href: '#logistica', label: 'Transporte' },
-  { href: '#consultoria', label: 'Consultoría' },
-  { href: '#casos', label: 'Casos' },
+  { href: '#servicios', label: 'Servicios' },
+  { href: '#flota', label: 'Flota' },
+  { href: '#cobertura', label: 'Cobertura' },
+  { href: '#proceso', label: 'Proceso' },
   { href: '#nosotros', label: 'Nosotros' },
-  { href: '#contacto', label: 'Contacto' },
 ];
 ---
 
@@ -25,7 +25,7 @@ const navLinks = [
           style="font-size:11.5px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:#E4E1D8;transition:color .2s ease"
         >{link.label}</a>
       ))}
-      <a href="#contacto" class="btn-fill-gold" style="font-size:11px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:#BD9750;border:1px solid #BD9750;padding:12px 22px">Cotizar carga</a>
+      <a href="#contacto" class="btn-fill-gold" style="font-size:11px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:#BD9750;border:1px solid #BD9750;padding:12px 22px">Cotizar</a>
     </div>
 
     <button
@@ -47,7 +47,7 @@ const navLinks = [
     {navLinks.map((link) => (
       <a href={link.href} class="mobile-menu-link" style="padding:15px 0;font-size:12.5px;letter-spacing:1.8px;text-transform:uppercase;color:#E4E1D8;border-bottom:1px solid rgba(247,245,239,0.08)">{link.label}</a>
     ))}
-    <a href="#contacto" class="mobile-menu-link" style="margin-top:18px;text-align:center;font-size:12px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:#BD9750;border:1px solid #BD9750;padding:16px 22px">Cotizar carga</a>
+    <a href="#contacto" class="mobile-menu-link" style="margin-top:18px;text-align:center;font-size:12px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:#BD9750;border:1px solid #BD9750;padding:16px 22px">Cotizar</a>
   </div>
 </header>
 

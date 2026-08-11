@@ -1,37 +1,30 @@
 ---
 const steps = [
-  {
-    num: '01',
-    title: 'Diagnóstico',
-    text: 'Revisamos su flujo de carga y sus números con datos suyos, no con benchmarks prestados.',
-  },
-  {
-    num: '02',
-    title: 'Diseño de la ruta',
-    text: 'Definimos vehículo, frecuencia, costo por viaje y el indicador con el que se mide el cumplimiento.',
-  },
-  {
-    num: '03',
-    title: 'Operación y mejora continua',
-    text: 'Rodamos, medimos y ajustamos. Cada mes revisamos con usted qué mejoró y qué falta.',
-  },
+  { num: '01', title: 'Solicitud y cotización', text: 'Escuchamos su necesidad y le ofrecemos la solución logística a la medida.' },
+  { num: '02', title: 'Planeación', text: 'Diseñamos la ruta más eficiente, segura y rentable para su carga.' },
+  { num: '03', title: 'Recolección', text: 'Recogemos en el lugar acordado cumpliendo los estándares de seguridad.' },
+  { num: '04', title: 'Transporte', text: 'Movemos la carga por la ruta óptima con monitoreo permanente.' },
+  { num: '05', title: 'Seguimiento', text: 'Rastreo constante y comunicación sobre el estado del envío.' },
+  { num: '06', title: 'Entrega', text: 'Entregamos en el destino, en el tiempo acordado y en óptimas condiciones.' },
+  { num: '07', title: 'Post entrega', text: 'Confirmamos su satisfacción y ajustamos lo que haya que ajustar.' },
 ];
 ---
 
-<section id="por-que" data-screen-label="Por qué las dos" style="max-width:1200px;margin:0 auto;padding:clamp(40px,6vw,72px) 24px clamp(72px,10vw,120px);scroll-margin-top:88px">
-  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,80px);align-items:start">
+<section id="proceso" data-screen-label="Proceso" style="max-width:1200px;margin:0 auto;padding:clamp(72px,10vw,116px) 24px;scroll-margin-top:88px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,72px);align-items:start">
     <div class="reveal">
-      <p style="margin:0 0 22px;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">Por qué transportamos y asesoramos</p>
-      <h2 style="margin:0;font-family:Montserrat,sans-serif;font-weight:300;font-size:clamp(28px,3.4vw,46px);line-height:1.16;letter-spacing:-1px;color:#0C203E">Quien planea la operación es quien responde por ella</h2>
-      <p style="margin:26px 0 0;font-size:16px;font-weight:300;line-height:1.8;color:#4A5262;max-width:46ch">La consultoría nos obliga a entender su negocio antes de mover un solo bulto: costos, inventario, ventanas de entrega. Por eso nuestros despachos no se planean sobre supuestos.</p>
+      <p style="margin:0 0 22px;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">Proceso logístico</p>
+      <h2 style="margin:0;font-family:Montserrat,sans-serif;font-weight:300;font-size:clamp(28px,3.4vw,46px);line-height:1.16;letter-spacing:-1px;color:#0C203E">Cada paso cuenta, cada envío importa</h2>
+      <p style="margin:26px 0 0;font-size:16px;font-weight:300;line-height:1.8;color:#4A5262;max-width:44ch">Siete etapas con responsable y control en cada una. Usted sabe en todo momento dónde está su carga y quién responde por ella.</p>
+      <div class="road" style="margin-top:34px;max-width:220px"></div>
     </div>
     <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;border-top:1px solid rgba(12,32,62,0.14)">
       {steps.map((step) => (
-        <li class="reveal step-row" style="display:grid;grid-template-columns:auto 1fr;gap:clamp(18px,3vw,36px);padding:30px 0;border-bottom:1px solid rgba(12,32,62,0.14)">
-          <span class="step-num" style="font-family:'Cormorant Garamond',serif;font-size:38px;line-height:1;color:#BD9750">{step.num}</span>
+        <li class="reveal step-row" style="display:grid;grid-template-columns:auto 1fr;gap:clamp(16px,2.5vw,30px);padding:22px 0;border-bottom:1px solid rgba(12,32,62,0.14)">
+          <span class="step-num" style="font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1;color:#BD9750">{step.num}</span>
           <div>
-            <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:21px;line-height:1.3;letter-spacing:-0.2px;color:#0C203E">{step.title}</h3>
-            <p style="margin:10px 0 0;font-size:14.5px;font-weight:300;line-height:1.7;color:#4A5262">{step.text}</p>
+            <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:18px;line-height:1.3;color:#0C203E">{step.title}</h3>
+            <p style="margin:8px 0 0;font-size:14px;font-weight:300;line-height:1.7;color:#4A5262">{step.text}</p>
           </div>
         </li>
       ))}
