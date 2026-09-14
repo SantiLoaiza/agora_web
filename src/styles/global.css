@@ -115,6 +115,9 @@ input, select, textarea, button {
 .obj { transition: border-color .3s ease, background-color .3s ease; }
 .obj:hover { border-color: rgba(189,151,80,0.6); background: rgba(189,151,80,0.05); }
 
+.btn-track { transition: background-color .25s ease; }
+.btn-track:hover { background: #F7F5EF !important; }
+
 /* --- live shipment indicator --- */
 @keyframes agora-live {
   0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(189,151,80,0.55); }

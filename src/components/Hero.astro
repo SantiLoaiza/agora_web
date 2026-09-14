@@ -69,6 +69,15 @@ const stats = [
             <p style="margin:8px 0 0;font-size:9.5px;font-weight:500;letter-spacing:1.8px;text-transform:uppercase;color:#8A94A6">Monitoreo</p>
           </div>
         </div>
+
+        <form id="ag-track-form" style="margin-top:26px;padding-top:22px;border-top:1px solid rgba(247,245,239,0.12);display:flex;flex-direction:column;gap:10px">
+          <label for="ag-guia" style="font-size:9.5px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;color:#BD9750">Consultar su guía</label>
+          <div style="display:flex;flex-wrap:wrap;gap:10px">
+            <input id="ag-guia" name="guia" type="text" autocomplete="off" placeholder="Número de guía" style="flex:1 1 160px;min-width:0;padding:12px 14px;min-height:46px;background:rgba(247,245,239,0.06);border:1px solid rgba(247,245,239,0.32);border-radius:0;font-size:14.5px;font-weight:400;color:#F7F5EF;outline:none;transition:border-color .2s ease;" />
+            <a id="ag-guia-link" class="btn-track" href="https://agora.cloudrapp.site/assets/trace.html?nombre=ENC010&amp;P_PEDIDO=" target="_blank" rel="noopener noreferrer" style="flex:none;background:#BD9750;color:#0C203E;border:1px solid #BD9750;font-size:11px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;padding:0 26px;min-height:46px;display:inline-flex;align-items:center;cursor:pointer">Rastrear</a>
+          </div>
+          <p id="ag-guia-error" aria-live="polite" style="margin:0;font-size:12px;font-weight:400;line-height:1.5;color:#E08A8A;display:none">Ingrese el número de guía que aparece en su remesa.</p>
+        </form>
       </aside>
     </div>
 

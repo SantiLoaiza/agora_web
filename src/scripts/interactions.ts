@@ -104,6 +104,44 @@ function initShipmentTracking() {
   }
 }
 
+function initGuideTracking() {
+  const form = document.getElementById('ag-track-form') as HTMLFormElement | null;
+  const input = document.getElementById('ag-guia') as HTMLInputElement | null;
+  const link = document.getElementById('ag-guia-link') as HTMLAnchorElement | null;
+  const error = document.getElementById('ag-guia-error');
+  if (!form || !input || !link) return;
+
+  const baseUrl = 'https://agora.cloudrapp.site/assets/trace.html?nombre=ENC010&P_PEDIDO=';
+
+  const showError = (show: boolean) => {
+    if (!error) return;
+    error.style.display = show ? '' : 'none';
+    input.style.borderColor = show ? '#E08A8A' : 'rgba(247,245,239,0.32)';
+  };
+
+  const validate = () => {
+    const guia = input.value.trim();
+    if (!guia) {
+      showError(true);
+      return false;
+    }
+    showError(false);
+    link.href = baseUrl + encodeURIComponent(guia);
+    return true;
+  };
+
+  input.addEventListener('input', () => showError(false));
+
+  link.addEventListener('click', (ev) => {
+    if (!validate()) ev.preventDefault();
+  });
+
+  form.addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    if (validate()) link.click();
+  });
+}
+
 function initIntentPickers() {
   document.querySelectorAll<HTMLAnchorElement>('[data-pick-intent]').forEach((el) => {
     el.addEventListener('click', (ev) => {
@@ -123,5 +161,6 @@ export function initInteractions() {
   initCountUp();
   initScrollProgress();
   initShipmentTracking();
+  initGuideTracking();
   initIntentPickers();
 }
