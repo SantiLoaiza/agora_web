@@ -1,0 +1,30 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/page/SectionHeader.astro';
+import LinkCards from '../../components/page/LinkCards.astro';
+import { services, servicePath } from '../../data/services';
+import { serviceSchema } from '../../data/schema';
+
+const crumbs = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Servicios', href: '/servicios' },
+];
+
+const cards = services.map((s) => ({ href: servicePath(s.slug), title: s.name, text: s.summary }));
+---
+
+<PageLayout
+  title="Servicios de transporte de carga en Colombia | AGORA"
+  description="Carga masiva y semimasiva, expresos, carga consolidada, transporte urbano, mudanzas y carga a puertos, con cobertura nacional y monitoreo 24/7."
+  crumbs={crumbs}
+  h1="Servicios de transporte de carga"
+  intro="Desde paquetería urbana hasta tractomulas de 28 toneladas: elegimos la solución según su carga, el destino y los tiempos que necesita, con cobertura en los 32 departamentos."
+  whatsappMessage="Hola, quiero cotizar un transporte de carga."
+  secondary={{ href: '/cobertura', label: 'Ver cobertura' }}
+  schema={[serviceSchema({ name: 'Transporte de carga', description: 'Servicios de transporte de carga con cobertura en los 32 departamentos de Colombia.', path: '/servicios' })]}
+>
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px 0">
+    <SectionHeader eyebrow="Soluciones logísticas" title="Elija el servicio que necesita" lead="En viajes exprés el mismo vehículo que carga hace la entrega: no pasamos su mercancía por centros logísticos de terceros." />
+    <LinkCards items={cards} minWidth={280} />
+  </section>
+</PageLayout>

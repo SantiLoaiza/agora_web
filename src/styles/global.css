@@ -197,3 +197,12 @@ button:focus-visible, a:focus-visible, input[type="checkbox"]:focus-visible {
   }
   .reveal { opacity: 1; }
 }
+
+/* --- internal links that keep the surrounding text style --- */
+/* Headings that double as links look like headings; hover hints the link. */
+.title-link { color: inherit; }
+.title-link:hover { color: #8A7238; }
+.on-dark .title-link:hover, .title-link.on-dark:hover { color: #BD9750; }
+/* Inline place names inside running text. */
+.inline-link { color: inherit; text-decoration: underline; text-decoration-color: rgba(189,151,80,0.55); text-underline-offset: 3px; }
+.inline-link:hover { color: #BD9750; }

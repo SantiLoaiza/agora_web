@@ -1,18 +1,97 @@
 ---
 import '../styles/global.css';
+import { SITE, ORG_ID, BUSINESS_ID } from '../data/site';
+import { services, servicePath } from '../data/services';
+import { cities } from '../data/coverage';
 
 interface Props {
   title: string;
   description: string;
   noindex?: boolean;
+  /** Extra JSON-LD nodes for this page (Service, BreadcrumbList, FAQPage…). */
+  schema?: Record<string, unknown>[];
 }
 
-const { title, description, noindex = false } = Astro.props;
+const { title, description, noindex = false, schema = [] } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const ogImage = new URL('/og-image.png', Astro.site);
+const abs = (path: string) => new URL(path, Astro.site).href;
+
+const graph = [
+  {
+    '@type': 'WebSite',
+    '@id': `${SITE.url}/#website`,
+    url: abs('/'),
+    name: SITE.name,
+    inLanguage: 'es-CO',
+    publisher: { '@id': ORG_ID },
+  },
+  {
+    '@type': 'Organization',
+    '@id': ORG_ID,
+    name: SITE.name,
+    legalName: SITE.legalName,
+    slogan: SITE.slogan,
+    url: abs('/'),
+    logo: { '@type': 'ImageObject', url: abs('/logo.png'), width: 648, height: 726 },
+    image: ogImage.href,
+    email: SITE.email,
+    telephone: SITE.phone,
+    foundingDate: SITE.foundingYear,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: SITE.phone,
+      email: SITE.email,
+      contactType: 'customer service',
+      areaServed: 'CO',
+      availableLanguage: 'es',
+    },
+  },
+  {
+    // schema.org has no freight-specific business type (MovingCompany means
+    // household removals), so the generic LocalBusiness is the accurate one.
+    '@type': 'LocalBusiness',
+    '@id': BUSINESS_ID,
+    name: SITE.legalName,
+    description:
+      'Empresa colombiana de transporte de carga masiva, semimasiva y distribución, con cobertura en los 32 departamentos.',
+    url: abs('/'),
+    logo: abs('/logo.png'),
+    image: ogImage.href,
+    telephone: SITE.phone,
+    email: SITE.email,
+    parentOrganization: { '@id': ORG_ID },
+    // TODO: add streetAddress / postalCode and openingHoursSpecification once confirmed.
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: SITE.city,
+      addressRegion: SITE.region,
+      addressCountry: SITE.country,
+    },
+    areaServed: [
+      { '@type': 'Country', name: 'Colombia' },
+      ...cities.map((c) => ({ '@type': 'City', name: c.name, url: abs(`/cobertura/${c.slug}`) })),
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Servicios de transporte de carga',
+      itemListElement: services.map((s) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: s.name, url: abs(servicePath(s.slug)) },
+      })),
+    },
+  },
+  ...schema,
+];
+
+const structuredData = { '@context': 'https://schema.org', '@graph': graph };
+
+const fontsHref =
+  'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap';
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es-CO">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,12 +107,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content="es_CO" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`Logo de ${SITE.legalName}`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    {!noindex && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Non-blocking font load: same fonts, but the page can paint before the CSS arrives. -->
+    <link rel="preload" as="style" href={fontsHref} />
+    <link rel="stylesheet" href={fontsHref} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={fontsHref} /></noscript>
   </head>
   <body style="font-family:Montserrat,sans-serif;color:#0C203E;background:#F7F5EF;overflow-x:hidden">
     <div id="agora-progress"></div>

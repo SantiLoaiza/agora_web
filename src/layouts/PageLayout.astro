@@ -1,0 +1,40 @@
+---
+// Shell for every inner page: same header, footer and contact block as the home
+// page, plus breadcrumbs, a single H1, FAQ and their JSON-LD.
+import Layout from './Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ContactSection from '../components/ContactSection.astro';
+import Faq from '../components/Faq.astro';
+import PageHero from '../components/page/PageHero.astro';
+import type { Crumb, Faq as FaqItem } from '../data/site';
+import { breadcrumbSchema, faqSchema } from '../data/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  crumbs: Crumb[];
+  h1: string;
+  intro: string;
+  whatsappMessage: string;
+  facts?: { value: string; label: string }[];
+  secondary?: { href: string; label: string };
+  faqs?: FaqItem[];
+  schema?: Record<string, unknown>[];
+}
+
+const { title, description, crumbs, h1, intro, whatsappMessage, facts, secondary, faqs = [], schema = [] } = Astro.props;
+
+const pageSchema = [breadcrumbSchema(crumbs), ...(faqs.length ? [faqSchema(faqs)] : []), ...schema];
+---
+
+<Layout title={title} description={description} schema={pageSchema}>
+  <Header />
+  <main>
+    <PageHero crumbs={crumbs} h1={h1} intro={intro} whatsappMessage={whatsappMessage} facts={facts} secondary={secondary} />
+    <slot />
+    {faqs.length > 0 && <Faq items={faqs} />}
+  </main>
+  <ContactSection whatsappMessage={whatsappMessage} />
+  <Footer />
+</Layout>

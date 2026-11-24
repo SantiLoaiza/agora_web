@@ -1,8 +1,13 @@
 ---
-const whatsappNumber = '573163174316';
-const whatsappDisplay = '+57 316 317 4316';
-const whatsappMessage = encodeURIComponent('Hola, quiero cotizar un transporte de carga o una asesoría empresarial.');
-const whatsappHref = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+import { SITE, whatsappLink } from '../data/site';
+
+interface Props {
+  /** Prefilled WhatsApp message, so each page can say what is being quoted. */
+  whatsappMessage?: string;
+}
+
+const whatsappDisplay = SITE.phoneDisplay;
+const whatsappHref = whatsappLink(Astro.props.whatsappMessage);
 ---
 
 <section id="contacto" data-screen-label="Contacto" style="background:#EFEBE0;border-top:1px solid rgba(12,32,62,0.08);scroll-margin-top:88px">
@@ -47,11 +52,11 @@ const whatsappHref = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px">
           <div style="background:#FFFDF8;border:1px solid rgba(12,32,62,0.12);padding:20px 22px">
             <p style="margin:0;font-size:10px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#8A7238">Llamar</p>
-            <a href={`tel:+${whatsappNumber}`} style="display:block;margin:8px 0 0;font-size:15px;font-weight:400;color:#0C203E">{whatsappDisplay}</a>
+            <a href={`tel:${SITE.phone}`} style="display:block;margin:8px 0 0;font-size:15px;font-weight:400;color:#0C203E">{whatsappDisplay}</a>
           </div>
           <div style="background:#FFFDF8;border:1px solid rgba(12,32,62,0.12);padding:20px 22px">
             <p style="margin:0;font-size:10px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#8A7238">Correo</p>
-            <a href="mailto:contacto@agorastrategy.co" style="display:block;margin:8px 0 0;font-size:15px;font-weight:400;color:#0C203E;word-break:break-word">contacto@agorastrategy.co</a>
+            <a href={`mailto:${SITE.email}`} style="display:block;margin:8px 0 0;font-size:15px;font-weight:400;color:#0C203E;word-break:break-word">{SITE.email}</a>
           </div>
         </div>
       </div>

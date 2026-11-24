@@ -1,0 +1,84 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/page/SectionHeader.astro';
+import LinkCards from '../../components/page/LinkCards.astro';
+import { vehicles, vehiclePath, vehicleFaqs, vehicleNoun, type Vehicle } from '../../data/fleet';
+import { services, servicePath } from '../../data/services';
+import { serviceSchema } from '../../data/schema';
+
+export function getStaticPaths() {
+  return vehicles.map((vehicle) => ({ params: { slug: vehicle.slug }, props: { vehicle } }));
+}
+
+const { vehicle } = Astro.props as { vehicle: Vehicle };
+const path = vehiclePath(vehicle.slug);
+const noun = vehicleNoun(vehicle);
+
+const crumbs = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Flota', href: '/flota' },
+  { name: vehicle.name, href: path },
+];
+
+const facts = [
+  { value: vehicle.capacity, label: 'Capacidad máxima' },
+  vehicle.volume === 'Sobredimensionada'
+    ? { value: 'Extra', label: 'Carga sobredimensionada' }
+    : { value: vehicle.volume, label: 'Volumen de carga' },
+  { value: '24/7', label: 'Monitoreo satelital' },
+];
+
+const relatedServices = services
+  .filter((s) => s.vehicles.includes(vehicle.slug))
+  .map((s) => ({ href: servicePath(s.slug), title: s.name, text: s.summary }));
+
+const otherVehicles = vehicles
+  .filter((v) => v.slug !== vehicle.slug)
+  .map((v) => ({
+    href: vehiclePath(v.slug),
+    meta: v.volume === 'Sobredimensionada' ? `Hasta ${v.capacity}` : `${v.capacity} · ${v.volume}`,
+    title: v.name,
+    text: v.text,
+  }));
+---
+
+<PageLayout
+  title={vehicle.title}
+  description={vehicle.description}
+  crumbs={crumbs}
+  h1={vehicle.h1}
+  intro={vehicle.intro}
+  whatsappMessage={`Hola, quiero cotizar un transporte en ${vehicle.article} ${noun}.`}
+  facts={facts}
+  secondary={{ href: '/flota', label: 'Ver toda la flota' }}
+  faqs={vehicleFaqs(vehicle)}
+  schema={[serviceSchema({ name: vehicle.h1, description: vehicle.description, path })]}
+>
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px clamp(32px,4vw,48px)">
+    <SectionHeader
+      eyebrow="Usos típicos"
+      title={`¿Cuándo elegir ${vehicle.article} ${noun}?`}
+      lead="Unidades verificadas mecánica y documentalmente, con mantenimiento preventivo programado y conductores certificados."
+    />
+    <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:0 clamp(24px,4vw,56px);border-top:1px solid rgba(12,32,62,0.14)">
+      {vehicle.uses.map((use) => (
+        <li class="reveal" style="display:grid;grid-template-columns:auto 1fr;gap:16px;padding:20px 0;border-bottom:1px solid rgba(12,32,62,0.14);font-size:15px;font-weight:300;line-height:1.7;color:#4A5262">
+          <span aria-hidden="true" style="color:#BD9750;font-size:11px;line-height:2.3">▲</span>
+          {use}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  {relatedServices.length > 0 && (
+    <section style="max-width:1200px;margin:0 auto;padding:clamp(32px,4vw,48px) 24px">
+      <SectionHeader eyebrow="Servicios" title={`Servicios que prestamos con ${vehicle.article} ${noun}`} />
+      <LinkCards items={relatedServices} minWidth={260} />
+    </section>
+  )}
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(32px,4vw,48px) 24px 0">
+    <SectionHeader eyebrow="Flota" title="Otros vehículos de nuestra flota" />
+    <LinkCards items={otherVehicles} minWidth={200} />
+  </section>
+</PageLayout>

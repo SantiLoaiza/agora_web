@@ -1,0 +1,84 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/page/SectionHeader.astro';
+import LinkCards from '../../components/page/LinkCards.astro';
+import { services, servicePath, type Service } from '../../data/services';
+import { getVehicle, vehiclePath } from '../../data/fleet';
+import { getCity, cityPath, transitFor } from '../../data/coverage';
+import { serviceSchema } from '../../data/schema';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props as { service: Service };
+const path = servicePath(service.slug);
+
+const crumbs = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Servicios', href: '/servicios' },
+  { name: service.name, href: path },
+];
+
+const vehicleCards = service.vehicles.map(getVehicle).map((v) => ({
+  href: vehiclePath(v.slug),
+  meta: v.volume === 'Sobredimensionada' ? `Hasta ${v.capacity}` : `${v.capacity} · ${v.volume}`,
+  title: v.name,
+  text: v.text,
+}));
+
+const citySlugs = service.cities ?? ['bogota', 'medellin', 'cali', 'barranquilla'];
+const cityCards = citySlugs.map(getCity).map((c) => {
+  const t = transitFor(c.name);
+  return {
+    href: cityPath(c.slug),
+    meta: c.isHub ? 'Sede principal' : t ? `${t.range} días hábiles` : c.department,
+    title: c.isHub ? `Transporte de carga en ${c.name}` : `Transporte de carga a ${c.name}`,
+    text: c.department,
+  };
+});
+
+const otherServices = services
+  .filter((s) => s.slug !== service.slug)
+  .map((s) => ({ href: servicePath(s.slug), title: s.name, text: s.summary }));
+---
+
+<PageLayout
+  title={service.title}
+  description={service.description}
+  crumbs={crumbs}
+  h1={service.h1}
+  intro={service.intro}
+  whatsappMessage={service.whatsapp}
+  secondary={{ href: '/flota', label: 'Ver flota' }}
+  faqs={service.faqs}
+  schema={[serviceSchema({ name: service.h1, description: service.description, path })]}
+>
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px clamp(32px,4vw,48px)">
+    <SectionHeader eyebrow="Qué incluye" title={`${service.name}: lo que recibe con AGORA`} />
+    <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:0 clamp(24px,4vw,56px);border-top:1px solid rgba(12,32,62,0.14)">
+      {service.includes.map((item) => (
+        <li class="reveal" style="display:grid;grid-template-columns:auto 1fr;gap:16px;padding:20px 0;border-bottom:1px solid rgba(12,32,62,0.14);font-size:15px;font-weight:300;line-height:1.7;color:#4A5262">
+          <span aria-hidden="true" style="color:#BD9750;font-size:11px;line-height:2.3">▲</span>
+          {item}
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(32px,4vw,48px) 24px">
+    <SectionHeader eyebrow="Flota" title="Vehículos para este servicio" lead="Asignamos el vehículo según el peso, el volumen y el tipo de mercancía." />
+    <LinkCards items={vehicleCards} minWidth={220} />
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(32px,4vw,48px) 24px">
+    <SectionHeader eyebrow="Cobertura" title="Destinos frecuentes" lead={`Cobertura en los 32 departamentos. Vea todos los destinos en nuestra página de cobertura.`} />
+    <LinkCards items={cityCards} minWidth={220} />
+    <p class="reveal" style="margin:22px 0 0;font-size:14px;font-weight:300;color:#4A5262"><a href="/cobertura" class="inline-link" style="color:#0C203E">Ver todas las ciudades y tiempos de entrega</a></p>
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(32px,4vw,48px) 24px 0">
+    <SectionHeader eyebrow="Más soluciones" title="Otros servicios de transporte" />
+    <LinkCards items={otherServices} minWidth={260} />
+  </section>
+</PageLayout>

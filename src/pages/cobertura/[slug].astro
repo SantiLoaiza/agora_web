@@ -1,0 +1,130 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import SectionHeader from '../../components/page/SectionHeader.astro';
+import LinkCards from '../../components/page/LinkCards.astro';
+import { cities, cityPath, cityFaqs, cityPathByName, transitFor, zones, TRANSIT_NOTE, type City } from '../../data/coverage';
+import { getService, servicePath } from '../../data/services';
+import { getVehicle, vehiclePath } from '../../data/fleet';
+import { serviceSchema } from '../../data/schema';
+
+export function getStaticPaths() {
+  return cities.map((city) => ({ params: { slug: city.slug }, props: { city } }));
+}
+
+const { city } = Astro.props as { city: City };
+const path = cityPath(city.slug);
+const transit = city.isHub ? null : transitFor(city.name);
+
+const crumbs = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Cobertura', href: '/cobertura' },
+  { name: city.name, href: path },
+];
+
+const facts = city.isHub
+  ? [
+      { value: '32', label: 'Departamentos desde Bogotá' },
+      { value: '+1.100', label: 'Municipios atendidos' },
+      { value: '24/7', label: 'Monitoreo satelital' },
+    ]
+  : [
+      { value: transit ? transit.range : '—', label: 'Días hábiles desde Bogotá' },
+      { value: city.department, label: 'Departamento' },
+      { value: '24/7', label: 'Monitoreo satelital' },
+    ];
+
+const serviceCards = city.services.map(getService).map((s) => ({
+  href: servicePath(s.slug),
+  title: s.name,
+  text: s.summary,
+}));
+
+const vehicleSlugs = city.isHub ? ['carry', 'nhr', 'turbo', 'tractomula'] : ['tractomula', 'sencillo', 'turbo', 'camabaja'];
+const vehicleCards = vehicleSlugs.map(getVehicle).map((v) => ({
+  href: vehiclePath(v.slug),
+  meta: v.volume === 'Sobredimensionada' ? `Hasta ${v.capacity}` : `${v.capacity} · ${v.volume}`,
+  title: v.name,
+  text: v.text,
+}));
+
+const otherCities = cities
+  .filter((c) => c.slug !== city.slug)
+  .map((c) => {
+    const t = transitFor(c.name);
+    return {
+      href: cityPath(c.slug),
+      meta: c.isHub ? 'Sede principal' : t ? `${t.range} días hábiles` : c.department,
+      title: c.isHub ? `Transporte de carga en ${c.name}` : `Transporte de carga a ${c.name}`,
+      text: c.department,
+    };
+  });
+
+const whatsappMessage = city.isHub
+  ? 'Hola, quiero cotizar un transporte de carga en Bogotá.'
+  : `Hola, quiero cotizar un transporte de carga de Bogotá a ${city.name}.`;
+---
+
+<PageLayout
+  title={city.title}
+  description={city.description}
+  crumbs={crumbs}
+  h1={city.h1}
+  intro={city.intro}
+  whatsappMessage={whatsappMessage}
+  facts={facts}
+  secondary={{ href: '/cobertura', label: 'Ver cobertura nacional' }}
+  faqs={cityFaqs(city)}
+  schema={[serviceSchema({ name: city.h1, description: city.description, path, areaServed: city.name })]}
+>
+  {city.isHub ? (
+    <section style="max-width:1200px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px clamp(32px,4vw,48px)">
+      <SectionHeader
+        eyebrow="Despachos desde Bogotá"
+        title="Tiempos de entrega a todo el país"
+        lead="Bogotá es nuestro centro de operaciones nacional y principal hub logístico. Estos son los tiempos estimados a cada zona."
+      />
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));gap:clamp(14px,1.8vw,18px)">
+        {zones.map((z) => (
+          <div class="reveal" style="border:1px solid rgba(12,32,62,0.12);padding:24px 22px 26px">
+            <p style="margin:0;font-family:'Cormorant Garamond',serif;font-size:40px;line-height:1;color:#BD9750">{z.range}</p>
+            <p style="margin:10px 0 16px;font-size:10.5px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;color:#6E7686">Días hábiles</p>
+            <p style="margin:0;font-size:13.5px;font-weight:300;line-height:1.75;color:#4A5262">{z.places.map((place, i) => (
+              <>{i > 0 && ' · '}{cityPathByName.has(place) ? <a href={cityPathByName.get(place)} class="inline-link" style="color:#0C203E">{place}</a> : place}</>
+            ))}</p>
+          </div>
+        ))}
+      </div>
+      <p class="reveal" style="margin:22px 0 0;font-size:12.5px;font-weight:300;line-height:1.7;color:#6E7686;max-width:70ch">{TRANSIT_NOTE}</p>
+    </section>
+  ) : (
+    <section style="max-width:1200px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px clamp(32px,4vw,48px)">
+      <SectionHeader
+        eyebrow={`Ruta Bogotá – ${city.name}`}
+        title={`Tiempo de entrega a ${city.name}: ${transit ? `${transit.min} a ${transit.max} días hábiles` : 'según destino'}`}
+        lead={TRANSIT_NOTE}
+      />
+      {transit && (
+        <p class="reveal" style="margin:0;font-size:15px;font-weight:300;line-height:1.8;color:#4A5262;max-width:80ch">
+          Con el mismo tiempo estimado también llegamos a {transit.neighbours.map((place, i) => (
+            <>{i > 0 && (i === transit.neighbours.length - 1 ? ' y ' : ', ')}{cityPathByName.has(place) ? <a href={cityPathByName.get(place)} class="inline-link" style="color:#0C203E">{place}</a> : place}</>
+          ))}.
+        </p>
+      )}
+    </section>
+  )}
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(32px,4vw,48px) 24px">
+    <SectionHeader eyebrow="Servicios" title={city.isHub ? 'Servicios de transporte en Bogotá' : `Servicios de transporte hacia ${city.name}`} />
+    <LinkCards items={serviceCards} minWidth={260} />
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(32px,4vw,48px) 24px">
+    <SectionHeader eyebrow="Flota" title="Vehículos disponibles" lead="Asignamos el vehículo según el peso, el volumen y el tipo de mercancía." />
+    <LinkCards items={vehicleCards} minWidth={220} />
+  </section>
+
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(32px,4vw,48px) 24px 0">
+    <SectionHeader eyebrow="Cobertura" title="Otras ciudades" />
+    <LinkCards items={otherCities} minWidth={220} />
+  </section>
+</PageLayout>

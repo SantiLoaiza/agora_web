@@ -1,0 +1,42 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Coverage from '../../components/Coverage.astro';
+import SectionHeader from '../../components/page/SectionHeader.astro';
+import LinkCards from '../../components/page/LinkCards.astro';
+import { cities, cityPath, transitFor } from '../../data/coverage';
+import { homeFaqs } from '../../data/faqs';
+
+const crumbs = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Cobertura', href: '/cobertura' },
+];
+
+const cityCards = cities.map((c) => {
+  const t = transitFor(c.name);
+  return {
+    href: cityPath(c.slug),
+    meta: c.isHub ? 'Sede principal' : t ? `${t.range} días hábiles` : c.department,
+    title: c.isHub ? `Transporte de carga en ${c.name}` : `Transporte de carga a ${c.name}`,
+    text: c.department,
+  };
+});
+
+const faqs = homeFaqs.slice(0, 2);
+---
+
+<PageLayout
+  title="Cobertura nacional de transporte de carga en Colombia"
+  description="Transporte de carga a los 32 departamentos y más de 1.100 municipios de Colombia, con tiempos de entrega por ciudad desde Bogotá."
+  crumbs={crumbs}
+  h1="Cobertura de transporte de carga en Colombia"
+  intro="Desde nuestra sede principal en Bogotá llegamos a veredas, municipios y corregimientos de los 32 departamentos. Consulte los tiempos de entrega estimados por ciudad."
+  whatsappMessage="Hola, quiero cotizar un transporte de carga a otra ciudad."
+  secondary={{ href: '/servicios', label: 'Ver servicios' }}
+  faqs={faqs}
+>
+  <section style="max-width:1200px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px clamp(48px,6vw,72px)">
+    <SectionHeader eyebrow="Ciudades principales" title="Transporte de carga por ciudad" />
+    <LinkCards items={cityCards} minWidth={220} />
+  </section>
+  <Coverage />
+</PageLayout>

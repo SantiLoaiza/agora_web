@@ -1,41 +1,51 @@
 ---
 import { Image } from 'astro:assets';
 import logoNegativo from '../assets/images/agora-logo-negativo.png';
+import { SITE } from '../data/site';
+import { services, servicePath } from '../data/services';
+import { cities, cityPath } from '../data/coverage';
+
+const linkStyle = 'font-size:14px;font-weight:300;color:#C4C9D2';
+const titleStyle = 'margin:0 0 18px;font-size:10px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#BD9750';
 ---
 
 <footer style="background:#0C203E;border-top:1px solid rgba(189,151,80,0.28)">
   <div style="max-width:1200px;margin:0 auto;padding:clamp(56px,7vw,88px) 24px 34px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:clamp(32px,4vw,56px)">
     <div>
-      <Image src={logoNegativo} alt="AGORA STRATEGY SAS" width={140} height={157} densities={[1, 2, 3]} style="display:block;width:140px;height:auto" />
+      <Image src={logoNegativo} alt="Logo de AGORA STRATEGY S.A.S." width={140} height={157} densities={[1, 2, 3]} style="display:block;width:140px;height:auto" />
       <p style="margin:24px 0 0;font-size:14px;font-weight:300;line-height:1.75;color:#98A0AF;max-width:30ch">Moviendo al mundo con inteligencia. Transporte de carga y asesoría empresarial. Bogotá, Colombia.</p>
     </div>
-    <div>
-      <p style="margin:0 0 18px;font-size:10px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#BD9750">Servicios</p>
+    <nav aria-label="Servicios">
+      <p style={titleStyle}><a href="/servicios" style="color:inherit">Servicios</a></p>
       <div style="display:flex;flex-direction:column;gap:11px">
-        <a href="#servicios" style="font-size:14px;font-weight:300;color:#C4C9D2">Soluciones logísticas</a>
-        <a href="#flota" style="font-size:14px;font-weight:300;color:#C4C9D2">Flota</a>
-        <a href="#cobertura" style="font-size:14px;font-weight:300;color:#C4C9D2">Cobertura y tiempos</a>
-        <a href="#proceso" style="font-size:14px;font-weight:300;color:#C4C9D2">Proceso logístico</a>
+        {services.map((s) => <a href={servicePath(s.slug)} style={linkStyle}>{s.name}</a>)}
+        <a href="/flota" style={linkStyle}>Flota</a>
       </div>
-    </div>
+    </nav>
+    <nav aria-label="Cobertura">
+      <p style={titleStyle}><a href="/cobertura" style="color:inherit">Cobertura</a></p>
+      <div style="display:flex;flex-direction:column;gap:11px">
+        {cities.map((c) => (
+          <a href={cityPath(c.slug)} style={linkStyle}>{c.isHub ? `Transporte de carga en ${c.name}` : `Carga a ${c.name}`}</a>
+        ))}
+      </div>
+    </nav>
     <div>
-      <p style="margin:0 0 18px;font-size:10px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#BD9750">Contacto</p>
+      <p style={titleStyle}>Contacto</p>
       <div style="display:flex;flex-direction:column;gap:11px">
         <p style="margin:0;font-size:14px;font-weight:300;color:#C4C9D2">Bogotá · Cali · Medellín</p>
-        <p style="margin:0;font-size:14px;font-weight:300;color:#C4C9D2">+57 321 767 3134</p>
-        <p style="margin:0;font-size:14px;font-weight:300;color:#C4C9D2">contacto@agorastrategy.co</p>
+        <a href={`tel:${SITE.phone}`} style={linkStyle}>{SITE.phoneDisplay}</a>
+        <a href={`mailto:${SITE.email}`} style={linkStyle}>{SITE.email}</a>
       </div>
-    </div>
-    <div>
-      <p style="margin:0 0 18px;font-size:10px;font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:#BD9750">Legales</p>
+      <p style={`${titleStyle};margin-top:34px`}>Legales</p>
       <div style="display:flex;flex-direction:column;gap:11px">
-        <a href="#politica" style="font-size:14px;font-weight:300;color:#C4C9D2">Política de tratamiento de datos</a>
-        <a href="#terminos" style="font-size:14px;font-weight:300;color:#C4C9D2">Términos y condiciones</a>
+        <a href="#politica" style={linkStyle}>Política de tratamiento de datos</a>
+        <a href="#terminos" style={linkStyle}>Términos y condiciones</a>
       </div>
     </div>
   </div>
   <div style="max-width:1200px;margin:0 auto;padding:22px 24px 40px;border-top:1px solid rgba(247,245,239,0.10);display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between">
-    <p style="margin:0;font-size:11.5px;font-weight:300;letter-spacing:0.4px;color:#7C8494">© 2026 AGORA STRATEGY S.A.S. Todos los derechos reservados.</p>
+    <p style="margin:0;font-size:11.5px;font-weight:300;letter-spacing:0.4px;color:#7C8494">© 2026 {SITE.legalName} Todos los derechos reservados.</p>
     <p style="margin:0;font-size:11.5px;font-weight:300;letter-spacing:0.4px;color:#7C8494">Empresa habilitada por el Ministerio de Transporte.</p>
   </div>
 </footer>

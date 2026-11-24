@@ -2,19 +2,30 @@
 import { Image } from 'astro:assets';
 import logoNegativo from '../assets/images/agora-logo-negativo.png';
 
-const navLinks = [
-  { href: '#servicios', label: 'Servicios' },
-  { href: '#flota', label: 'Flota' },
-  { href: '#cobertura', label: 'Cobertura' },
-  { href: '#proceso', label: 'Proceso' },
-  { href: '#nosotros', label: 'Nosotros' },
-];
+// On the home page the menu scrolls to its sections; on inner pages it links to
+// the section hubs so every page passes link equity to them.
+const isHome = Astro.url.pathname === '/';
+const navLinks = isHome
+  ? [
+      { href: '#servicios', label: 'Servicios' },
+      { href: '#flota', label: 'Flota' },
+      { href: '#cobertura', label: 'Cobertura' },
+      { href: '#proceso', label: 'Proceso' },
+      { href: '#nosotros', label: 'Nosotros' },
+    ]
+  : [
+      { href: '/servicios', label: 'Servicios' },
+      { href: '/flota', label: 'Flota' },
+      { href: '/cobertura', label: 'Cobertura' },
+      { href: '/#proceso', label: 'Proceso' },
+      { href: '/#nosotros', label: 'Nosotros' },
+    ];
 ---
 
 <header id="site-header" style="position:sticky;top:0;z-index:60;background:#0C203E;border-bottom:1px solid rgba(189,151,80,0.28)">
   <nav aria-label="Principal" style="max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:24px">
-    <a href="#inicio" aria-label="AGORA STRATEGY SAS, inicio" style="display:flex;align-items:center;flex:none;padding:4px 0">
-      <Image src={logoNegativo} alt="AGORA STRATEGY SAS" width={96} height={108} densities={[1, 2, 3]} style="display:block;width:96px;height:auto" />
+    <a href={isHome ? '#inicio' : '/'} aria-label="AGORA STRATEGY S.A.S., inicio" style="display:flex;align-items:center;flex:none;padding:4px 0">
+      <Image src={logoNegativo} alt="Logo de AGORA STRATEGY S.A.S." width={96} height={108} densities={[1, 2, 3]} loading="eager" style="display:block;width:96px;height:auto" />
     </a>
 
     <div class="desktop-nav" style="display:flex;align-items:center;gap:clamp(16px,2.2vw,32px)">

@@ -1,0 +1,55 @@
+---
+// Navy intro band for inner pages: breadcrumbs, the page's single H1, a short
+// intro and the WhatsApp quote button. Mirrors the home Hero's type and colours.
+import type { Crumb } from '../../data/site';
+import { whatsappLink } from '../../data/site';
+
+interface Props {
+  crumbs: Crumb[];
+  h1: string;
+  intro: string;
+  whatsappMessage: string;
+  facts?: { value: string; label: string }[];
+  secondary?: { href: string; label: string };
+}
+
+const { crumbs, h1, intro, whatsappMessage, facts = [], secondary } = Astro.props;
+---
+
+<section style="position:relative;background:#0C203E;padding:clamp(56px,8vw,104px) 24px clamp(56px,8vw,96px)">
+  <div style="position:absolute;inset:0;background:radial-gradient(110% 85% at 84% 6%, rgba(189,151,80,0.11) 0%, rgba(12,32,62,0) 60%);pointer-events:none"></div>
+  <div style="position:relative;max-width:1200px;margin:0 auto">
+    <nav aria-label="Ruta de navegación" class="hero-in" style="animation-delay:.05s">
+      <ol style="list-style:none;margin:0 0 28px;padding:0;display:flex;flex-wrap:wrap;gap:8px;font-size:11px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase">
+        {crumbs.map((c, i) => (
+          <li style="display:flex;gap:8px;color:#8A94A6">
+            {i > 0 && <span aria-hidden="true" style="color:#BD9750">/</span>}
+            {i < crumbs.length - 1 ? (
+              <a href={c.href} class="title-link on-dark" style="color:#C4C9D2">{c.name}</a>
+            ) : (
+              <span aria-current="page" style="color:#BD9750">{c.name}</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </nav>
+    <h1 class="hero-in" style="animation-delay:.18s;margin:0;font-family:Montserrat,sans-serif;font-weight:300;font-size:clamp(32px,4.4vw,58px);line-height:1.12;letter-spacing:-1.2px;color:#F7F5EF;max-width:20ch">{h1}</h1>
+    <p class="hero-in" style="animation-delay:.3s;margin:28px 0 0;max-width:60ch;font-size:clamp(15px,1.3vw,17.5px);font-weight:300;line-height:1.75;color:#C4C9D2">{intro}</p>
+    <div class="hero-in" style="animation-delay:.42s;display:flex;flex-wrap:wrap;gap:14px;margin-top:38px">
+      <a href={whatsappLink(whatsappMessage)} target="_blank" rel="noopener noreferrer" class="btn-fill-gold" style="background:#F7F5EF;color:#0C203E;font-size:11.5px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;padding:19px 34px;min-height:44px;display:inline-flex;align-items:center">Cotizar por WhatsApp</a>
+      {secondary && (
+        <a href={secondary.href} class="btn-sweep" style="border:1px solid rgba(247,245,239,0.38);color:#F7F5EF;font-size:11.5px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;padding:19px 34px;min-height:44px;display:inline-flex;align-items:center;transition:border-color .25s ease,color .25s ease">{secondary.label}</a>
+      )}
+    </div>
+    {facts.length > 0 && (
+      <dl class="hero-in" style="animation-delay:.52s;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:clamp(24px,4vw,48px);margin:clamp(44px,6vw,68px) 0 0;padding-top:30px;border-top:1px solid rgba(189,151,80,0.28)">
+        {facts.map((f) => (
+          <div style="display:flex;flex-direction:column-reverse">
+            <dt style="margin:12px 0 0;font-size:10.5px;font-weight:500;letter-spacing:2.2px;text-transform:uppercase;color:#98A0AF">{f.label}</dt>
+            <dd style="margin:0;font-family:'Cormorant Garamond',serif;font-size:40px;line-height:1;color:#F7F5EF">{f.value}</dd>
+          </div>
+        ))}
+      </dl>
+    )}
+  </div>
+</section>

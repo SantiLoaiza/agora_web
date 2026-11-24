@@ -1,0 +1,27 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import Fleet from '../../components/Fleet.astro';
+import { vehicles, vehicleFaqs } from '../../data/fleet';
+import { homeFaqs } from '../../data/faqs';
+
+const crumbs = [
+  { name: 'Inicio', href: '/' },
+  { name: 'Flota', href: '/flota' },
+];
+
+// Fleet-wide questions: the vehicle list from the home FAQ plus how to book.
+const faqs = [homeFaqs.find((f) => f.q.startsWith('¿Qué tipos de vehículos'))!, vehicleFaqs(vehicles[0])[2]];
+---
+
+<PageLayout
+  title="Flota de transporte de carga: de Carry a tractomula"
+  description="Flota propia para transporte de carga en Colombia: Carry, NHR, turbo, sencillo, camabaja y tractomula de hasta 28 toneladas, con monitoreo 24/7."
+  crumbs={crumbs}
+  h1="Flota para transporte de carga"
+  intro="Seis tipos de vehículo, desde el Carry de 1.000 kg para entregas urbanas hasta la tractomula de 28.000 kg para carga masiva. Elegimos el indicado según el peso, el volumen y la ruta."
+  whatsappMessage="Hola, quiero cotizar un transporte de carga y saber qué vehículo necesito."
+  secondary={{ href: '/servicios', label: 'Ver servicios' }}
+  faqs={faqs}
+>
+  <Fleet />
+</PageLayout>

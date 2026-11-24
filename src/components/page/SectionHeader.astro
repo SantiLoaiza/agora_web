@@ -1,0 +1,19 @@
+---
+// Eyebrow + H2 (+ optional lead) used by every content section on the site.
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+}
+
+const { eyebrow, title, lead } = Astro.props;
+---
+
+<div class="reveal" style="display:flex;align-items:baseline;gap:16px;margin-bottom:14px">
+  <span class="rule-grow" style="width:34px;height:1px;background:#BD9750;display:block"></span>
+  <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">{eyebrow}</p>
+</div>
+<div class="reveal" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(24px,4vw,64px);align-items:end;margin-bottom:clamp(32px,4vw,48px)">
+  <h2 style="margin:0;font-family:Montserrat,sans-serif;font-weight:300;font-size:clamp(26px,3.2vw,42px);line-height:1.16;letter-spacing:-1px;color:#0C203E;max-width:20ch">{title}</h2>
+  {lead && <p style="margin:0;font-size:16px;font-weight:300;line-height:1.8;color:#4A5262;max-width:48ch">{lead}</p>}
+</div>

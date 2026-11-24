@@ -1,0 +1,51 @@
+---
+// Visible FAQ list. The matching FAQPage JSON-LD is emitted by the page through
+// Layout's `schema` prop (see data/schema.ts), so both always use the same items.
+import type { Faq } from '../data/site';
+
+interface Props {
+  items: Faq[];
+  title?: string;
+  eyebrow?: string;
+}
+
+const { items, title = 'Preguntas frecuentes', eyebrow = 'Resolvemos sus dudas' } = Astro.props;
+---
+
+<section id="preguntas" data-screen-label="Preguntas frecuentes" style="max-width:1200px;margin:0 auto;padding:clamp(64px,9vw,104px) 24px;scroll-margin-top:88px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,72px);align-items:start">
+    <div class="reveal">
+      <div style="display:flex;align-items:baseline;gap:16px;margin-bottom:22px">
+        <span class="rule-grow" style="width:34px;height:1px;background:#BD9750;display:block"></span>
+        <p style="margin:0;font-size:11px;font-weight:600;letter-spacing:2.8px;text-transform:uppercase;color:#8A7238">{eyebrow}</p>
+      </div>
+      <h2 style="margin:0;font-family:Montserrat,sans-serif;font-weight:300;font-size:clamp(28px,3.4vw,46px);line-height:1.16;letter-spacing:-1px;color:#0C203E">{title}</h2>
+    </div>
+    <div style="border-top:1px solid rgba(12,32,62,0.14)">
+      {items.map((item) => (
+        <details class="reveal faq-item" style="border-bottom:1px solid rgba(12,32,62,0.14)">
+          <summary style="display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer;list-style:none">
+            <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:17px;line-height:1.4;color:#0C203E">{item.q}</h3>
+            <span class="faq-mark" aria-hidden="true" style="flex:none;font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1;color:#BD9750">+</span>
+          </summary>
+          <p style="margin:0 0 24px;font-size:15px;font-weight:300;line-height:1.75;color:#4A5262;max-width:62ch">{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq-mark {
+    transition: transform 0.3s ease;
+  }
+  details[open] .faq-mark {
+    transform: rotate(45deg);
+  }
+  summary:hover h3 {
+    color: #8a7238 !important;
+  }
+</style>

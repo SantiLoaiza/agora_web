@@ -9,23 +9,30 @@ import Process from '../components/Process.astro';
 import Technology from '../components/Technology.astro';
 import Industries from '../components/Industries.astro';
 import About from '../components/About.astro';
+import Faq from '../components/Faq.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Footer from '../components/Footer.astro';
+import { homeFaqs } from '../data/faqs';
+import { faqSchema } from '../data/schema';
 ---
 
 <Layout
-  title="AGORA STRATEGY SAS · Moviendo al mundo con inteligencia"
-  description="AGORA STRATEGY SAS — Transporte de carga masiva, semimasiva y distribución con cobertura en los 32 departamentos de Colombia. Moviendo al mundo con inteligencia."
+  title="Transporte de carga en Colombia | AGORA STRATEGY"
+  description="Transporte de carga masiva, semimasiva y distribución desde Bogotá a los 32 departamentos. Flota de Carry a tractomula y monitoreo 24/7."
+  schema={[faqSchema(homeFaqs)]}
 >
   <Header />
-  <Hero />
-  <Services />
-  <Fleet />
-  <Coverage />
-  <Process />
-  <Technology />
-  <Industries />
-  <About />
+  <main>
+    <Hero />
+    <Services />
+    <Fleet />
+    <Coverage />
+    <Process />
+    <Technology />
+    <Industries />
+    <About />
+    <Faq items={homeFaqs} />
+  </main>
   <ContactSection />
   <Footer />
 </Layout>

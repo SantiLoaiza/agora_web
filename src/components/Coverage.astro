@@ -1,28 +1,11 @@
 ---
-const offices = [
-  { city: 'Bogotá', tag: 'Sede principal', text: 'Centro de operaciones nacional y principal hub logístico.' },
-  { city: 'Cali', tag: 'Sede regional', text: 'Punto estratégico para las operaciones del suroccidente colombiano.' },
-  { city: 'Medellín', tag: 'Sede regional', text: 'Conexión directa con el noroccidente y el eje cafetero.' },
-  { city: 'Resto del país', tag: '+1.100 municipios', text: 'Veredas y corregimientos incluidos, con seguimiento en todo el trayecto.' },
-];
+import { zones, cityPathByName } from '../data/coverage';
 
-const zones = [
-  {
-    range: '1 – 2',
-    places: 'Cali · Medellín · Bucaramanga · Barrancabermeja · Armenia · Pereira · Neiva · Tunja · Duitama · Sogamoso · Fusagasugá · Girardot · Espinal · Guaduas · Melgar · Villavicencio · La Dorada · Acacías · Puerto Boyacá',
-  },
-  {
-    range: '2 – 3',
-    places: 'Chiquinquirá · Barbosa · Puerto López · Cumaral · Puerto Salgar · Garzón · Guamal · Saldaña · Granada · Puerto Lleras · Puerto Berrío',
-  },
-  {
-    range: '2 – 4',
-    places: 'Barranquilla · Cartagena · Santa Marta · Valledupar · Montería · Sincelejo · Pasto · Ipiales · Cúcuta · Ocaña · Popayán · Florencia · Pitalito · Caucasia · Aguachica · Mocoa · Tame',
-  },
-  {
-    range: '3 – 5',
-    places: 'Tumaco · Puerto Asís · Orito · Riohacha · Maicao · Quibdó · Istmina · Tibú · Apartadó · San Vicente del Caguán · Rubiales',
-  },
+const offices = [
+  { city: 'Bogotá', href: '/cobertura/bogota', tag: 'Sede principal', text: 'Centro de operaciones nacional y principal hub logístico.' },
+  { city: 'Cali', href: '/cobertura/cali', tag: 'Sede regional', text: 'Punto estratégico para las operaciones del suroccidente colombiano.' },
+  { city: 'Medellín', href: '/cobertura/medellin', tag: 'Sede regional', text: 'Conexión directa con el noroccidente y el eje cafetero.' },
+  { city: 'Resto del país', href: '/cobertura', tag: '+1.100 municipios', text: 'Veredas y corregimientos incluidos, con seguimiento en todo el trayecto.' },
 ];
 ---
 
@@ -40,7 +23,7 @@ const zones = [
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:clamp(16px,2vw,20px);margin-bottom:clamp(40px,5vw,60px)">
       {offices.map((o) => (
         <div class="reveal cred" style="border-top:1px solid rgba(189,151,80,0.35);padding:20px 0 0">
-          <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:18px;letter-spacing:-0.2px;color:#F7F5EF">{o.city}</h3>
+          <h3 style="margin:0;font-family:Montserrat,sans-serif;font-weight:500;font-size:18px;letter-spacing:-0.2px;color:#F7F5EF">{o.href ? <a href={o.href} class="title-link on-dark">{o.city}</a> : o.city}</h3>
           <p style="margin:8px 0 0;font-size:13px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:#BD9750">{o.tag}</p>
           <p style="margin:10px 0 0;font-size:14px;font-weight:300;line-height:1.7;color:#B7BDC8">{o.text}</p>
         </div>
@@ -53,7 +36,9 @@ const zones = [
         <div class="reveal zone" style="border:1px solid rgba(247,245,239,0.16);padding:24px 22px 26px">
           <p style="margin:0;font-family:'Cormorant Garamond',serif;font-size:40px;line-height:1;color:#BD9750">{z.range}</p>
           <p style="margin:10px 0 16px;font-size:10.5px;font-weight:600;letter-spacing:2.2px;text-transform:uppercase;color:#8A94A6">Días hábiles</p>
-          <p style="margin:0;font-size:13.5px;font-weight:300;line-height:1.75;color:#C4C9D2">{z.places}</p>
+          <p style="margin:0;font-size:13.5px;font-weight:300;line-height:1.75;color:#C4C9D2">{z.places.map((place, i) => (
+            <>{i > 0 && ' · '}{cityPathByName.has(place) ? <a href={cityPathByName.get(place)} class="inline-link">{place}</a> : place}</>
+          ))}</p>
         </div>
       ))}
     </div>
